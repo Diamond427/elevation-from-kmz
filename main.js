@@ -1,9 +1,11 @@
 const { get_kmz_response, download } = require("./util");
 const fs = require('fs');
 const path = require('path');
-const { logger } = require('./logger');
+const { createLogger } = require('./logger');
 
 require('dotenv').config();
+
+const logger = createLogger("Download Result - ")
 
 async function download_txt_from_kmz(kmz_path, txt_path) {
   try {

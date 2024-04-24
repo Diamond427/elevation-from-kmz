@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { logger } = require('./logger');
+const { createLogger } = require('./logger');
 const { test_txt_file } = require('./util');
+
+const logger = createLogger("Test Result - ");
 
 require('dotenv').config();
 
