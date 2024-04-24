@@ -26,5 +26,13 @@ npm install
 ## Run
 
 ```bash
-node main.js
+npm start
+```
+
+## Testing
+
+Test if all txt files within `OUTPUT_DIRECTORY` contains altitude attribute
+
+```bash
+npm test
 ```

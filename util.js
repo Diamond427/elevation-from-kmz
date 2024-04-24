@@ -1,7 +1,7 @@
 const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
-const proxys = require('./proxy');
+const readline = require("readline");
 
 async function get_kmz_response(local_kmz_path) {
   let data = new FormData();
@@ -42,7 +42,24 @@ async function download(source, path) {
   }).then(res => res.data.pipe(ws))
 }
 
+async function test_txt_file(path) {
+  const fileStream = fs.createReadStream(path);
+
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  // Note: we use the crlfDelay option to recognize all instances of CR LF
+  // ('\r\n') in input.txt as a single line break.
+
+  for await (const line of rl) {
+    return line.includes("altitude");
+    // check only the first line
+  }
+}
+
 module.exports = {
   get_kmz_response,
-  download
+  download,
+  test_txt_file
 };
