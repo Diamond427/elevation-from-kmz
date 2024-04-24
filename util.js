@@ -1,6 +1,7 @@
 const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
+const proxys = require('./proxy');
 
 async function get_kmz_response(local_kmz_path) {
   let data = new FormData();
@@ -10,20 +11,26 @@ async function get_kmz_response(local_kmz_path) {
       local_kmz_path
     )
   );
-  data.append("units", "metric");
-  data.append("convert_format", "text");
+  data.append('units', 'metric');
+  data.append('convert_format', 'text');
+  data.append('remote_data', '');
+  data.append('submitted', 'Convert & add elevation');
+  data.append('convert_delimiter', 'tab');
+  data.append('add_elevation', 'auto');
+  data.append('profile_x', 'distance');
+  data.append('profile_y', 'altitude');
 
   let config = {
     method: "post",
     maxBodyLength: Infinity,
     url: "https://www.gpsvisualizer.com/convert?output_elevation",
     headers: {
-      Cookie: "ip=188.43.253.77; ip_key=53077",
       ...data.getHeaders(),
     },
     data: data,
+    // proxy: proxys[0]
   };
-  return await axios.request(config).then((d) => d.data);
+  return await axios(config).then((d) => d.data);
 }
 
 async function download(source, path) {
