@@ -8,7 +8,8 @@
 
 ## How to use it
 
-Just change `KMZ_FILES_DIRECTORY` and `OUTPUT_DIRECTORY` in env file
+- Change `KMZ_FILES_DIRECTORY` and `OUTPUT_DIRECTORY` in .env file
+- Copy `proxy.example.js` to `proxy.js` and change the proxy list
 
 ### examples
 

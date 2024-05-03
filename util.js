@@ -2,6 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
 const readline = require("readline");
+const { getRandomAgent } = require("./proxy");
 
 async function get_kmz_response(local_kmz_path) {
   let data = new FormData();
@@ -28,7 +29,7 @@ async function get_kmz_response(local_kmz_path) {
       ...data.getHeaders(),
     },
     data: data,
-    // proxy: proxys[0]
+    httpsAgent: getRandomAgent()
   };
   return await axios(config).then((d) => d.data);
 }
@@ -38,7 +39,8 @@ async function download(source, path) {
   await axios({
     method: "get",
     url: source,
-    responseType: "stream"
+    responseType: "stream",
+    httpsAgent: getRandomAgent()
   }).then(res => res.data.pipe(ws))
 }
 
